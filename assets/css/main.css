@@ -1,0 +1,420 @@
+/* ──────────────────────────────────────────────────────────────────────
+   owyang.xyz — hand-written, no framework.
+
+   Palette (chosen for this brief, per the PRD):
+   the single accent is a muted take on Williams College purple — the
+   color of the place where Chris's arc starts. Everything else is warm
+   paper and warm ink; the drawn through-line is the only decoration.
+
+   Type: Newsreader (self-hosted, variable 400–600) for display;
+   Charter/Georgia system serif stack for body; system sans for meta
+   labels. Sentence case throughout.
+   ────────────────────────────────────────────────────────────────────── */
+
+@font-face {
+  font-family: "Newsreader";
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url("/assets/fonts/newsreader-latin.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Newsreader";
+  font-style: italic;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url("/assets/fonts/newsreader-italic-latin.woff2") format("woff2");
+}
+
+:root {
+  --paper: #fbfaf7;
+  --ink: #262119;
+  --ink-soft: #6e6759;
+  --plum: #533a7d;        /* Williams purple, muted for reading */
+  --plum-deep: #3d2a5e;
+  --plum-faint: #efeaf3;
+  --hairline: #e3ddd2;
+
+  --display: "Newsreader", Georgia, serif;
+  --body: Charter, "Bitstream Charter", "Iowan Old Style", Georgia, serif;
+  --sans: system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --measure: 41rem;
+  --rail: 3.25rem;        /* left rail the through-line lives in */
+  --rail-x: 0.8rem;       /* x-center of the line inside the rail */
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+body {
+  font-family: var(--body);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  color: var(--ink);
+  background: var(--paper);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection { background: var(--plum-faint); color: var(--plum-deep); }
+
+a {
+  color: var(--plum);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+  text-decoration-color: color-mix(in srgb, var(--plum) 45%, transparent);
+  transition: color 120ms ease, text-decoration-color 120ms ease;
+}
+a:hover { color: var(--plum-deep); text-decoration-color: currentColor; }
+
+:focus-visible {
+  outline: 2px solid var(--plum);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -3rem;
+  z-index: 10;
+  background: var(--plum);
+  color: var(--paper);
+  padding: 0.5rem 0.9rem;
+  border-radius: 4px;
+  text-decoration: none;
+}
+.skip-link:focus { top: 1rem; }
+
+/* ── Header ─────────────────────────────────────────────────────────── */
+
+.site-header nav {
+  max-width: calc(var(--measure) + var(--rail));
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.wordmark {
+  font-family: var(--display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1.2rem;
+  color: var(--ink);
+  text-decoration: none;
+}
+.wordmark:hover { color: var(--plum); }
+.site-header ul {
+  display: flex;
+  gap: 1.4rem;
+  list-style: none;
+}
+.site-header ul a {
+  font-family: var(--sans);
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  text-decoration: none;
+}
+.site-header ul a:hover { color: var(--plum); }
+.site-header ul a[aria-current="page"] {
+  color: var(--plum);
+  text-decoration: underline;
+  text-underline-offset: 0.3em;
+}
+
+/* ── Shared layout ──────────────────────────────────────────────────── */
+
+main {
+  max-width: calc(var(--measure) + var(--rail));
+  margin: 0 auto;
+  padding: 0 1.25rem 4rem;
+}
+main > section, .page { padding-left: var(--rail); }
+
+h1, h2, h3 {
+  font-family: var(--display);
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.meta {
+  font-family: var(--sans);
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+  letter-spacing: 0.02em;
+}
+
+.draft-tag { font-style: italic; color: var(--plum); }
+
+/* ── Hero ───────────────────────────────────────────────────────────── */
+
+.hero { padding-top: 4.5rem; }
+.hero h1 {
+  font-size: clamp(2.6rem, 7vw, 4.25rem);
+  font-weight: 500;
+}
+.hero-line {
+  margin-top: 1.1rem;
+  font-size: clamp(1.15rem, 2.4vw, 1.35rem);
+  line-height: 1.5;
+  max-width: 34ch;
+  color: var(--ink);
+  text-wrap: pretty;
+}
+.start-here { margin-top: 2.25rem; }
+.start-here p {
+  font-family: var(--sans);
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+  letter-spacing: 0.02em;
+}
+.start-here ul {
+  list-style: none;
+  margin-top: 0.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+.start-here a { font-size: 1.0625rem; }
+
+/* ── The story & through-line ───────────────────────────────────────── */
+
+.story { margin-top: 5.5rem; }
+.story-header h2, .now h2, .contact h2 {
+  font-size: 1.9rem;
+}
+.story-intro {
+  margin-top: 0.8rem;
+  max-width: 52ch;
+  color: var(--ink-soft);
+  font-size: 1.1rem;
+  text-wrap: pretty;
+}
+
+.chapters {
+  position: relative;
+  margin-top: 3rem;
+  margin-left: calc(-1 * var(--rail));
+}
+
+/* the SVG through-line (injected by JS) */
+.throughline {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2rem;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+.throughline path {
+  fill: none;
+  stroke: var(--plum);
+  stroke-width: 2.25;
+  stroke-linecap: round;
+  opacity: 0.85;
+}
+
+/* no-JS / fallback line: a quiet solid rail */
+html:not(.js) .chapters::before {
+  content: "";
+  position: absolute;
+  top: 0.4rem;
+  bottom: 0.4rem;
+  left: calc(var(--rail-x) - 1px);
+  width: 2px;
+  border-radius: 2px;
+  background: var(--plum);
+  opacity: 0.5;
+}
+
+.chapter-list { list-style: none; }
+.chapter {
+  position: relative;
+  padding-left: var(--rail);
+  max-width: calc(var(--measure));
+}
+.chapter + .chapter { margin-top: 3.25rem; }
+
+.chapter-marker {
+  position: absolute;
+  left: calc(var(--rail-x) - 0.34rem);
+  top: 0.3rem;
+  width: 0.68rem;
+  height: 0.68rem;
+  border-radius: 50%;
+  background: var(--paper);
+  border: 2px solid var(--plum);
+  transition: background 300ms ease;
+}
+.chapter-marker.lit, html:not(.js) .chapter-marker { background: var(--plum); }
+
+.chapter h3 {
+  margin-top: 0.45rem;
+  font-size: 1.55rem;
+}
+.chapter-short {
+  margin-top: 0.7rem;
+  text-wrap: pretty;
+}
+
+.chapter-deeper { margin-top: 0.9rem; }
+.chapter-deeper summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  cursor: pointer;
+  list-style: none;
+  font-family: var(--sans);
+  font-size: 0.85rem;
+  color: var(--plum);
+  user-select: none;
+}
+.chapter-deeper summary::-webkit-details-marker { display: none; }
+.chapter-deeper summary::before {
+  content: "+";
+  display: inline-block;
+  font-size: 1rem;
+  line-height: 1;
+  transition: transform 160ms ease;
+}
+.chapter-deeper[open] summary::before { transform: rotate(45deg); }
+.chapter-deeper summary:hover { color: var(--plum-deep); text-decoration: underline; text-underline-offset: 0.25em; }
+.deeper-body {
+  margin-top: 0.85rem;
+  padding: 0.25rem 0 0.25rem 1rem;
+  border-left: 2px solid var(--plum-faint);
+  color: var(--ink);
+}
+.deeper-body p + p, .deeper-body ul { margin-top: 0.8rem; }
+
+@media (prefers-reduced-motion: reduce) {
+  .chapter-marker, .chapter-deeper summary::before { transition: none; }
+}
+
+/* ── Now ────────────────────────────────────────────────────────────── */
+
+.now { margin-top: 5.5rem; }
+.now .meta { margin-top: 0.5rem; }
+.now ul {
+  margin-top: 1.2rem;
+  list-style: none;
+  max-width: var(--measure);
+}
+.now li {
+  position: relative;
+  padding-left: 1.4rem;
+  text-wrap: pretty;
+}
+.now li + li { margin-top: 0.85rem; }
+.now li::before {
+  content: "";
+  position: absolute;
+  left: 0.15rem;
+  top: 0.62em;
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: var(--plum);
+  opacity: 0.7;
+}
+.now-more { margin-top: 1.3rem; font-size: 0.95rem; color: var(--ink-soft); }
+
+/* ── Contact ────────────────────────────────────────────────────────── */
+
+.contact { margin-top: 5.5rem; }
+.contact p {
+  margin-top: 0.9rem;
+  max-width: 46ch;
+  font-size: 1.1rem;
+  text-wrap: pretty;
+}
+
+/* ── Pages (About, Writing, posts) ──────────────────────────────────── */
+
+.page { padding-top: 3.5rem; }
+.page-header h1 { font-size: clamp(2.1rem, 5vw, 2.9rem); }
+.page-header .dek {
+  margin-top: 0.7rem;
+  font-size: 1.15rem;
+  color: var(--ink-soft);
+  max-width: 48ch;
+  text-wrap: pretty;
+}
+.page-header .meta { margin-bottom: 0.6rem; }
+.page-header { margin-bottom: 2rem; }
+
+.prose { max-width: var(--measure); }
+.prose p + p, .prose ul, .prose ol, .prose blockquote,
+.prose ul + p, .prose ol + p, .prose blockquote + p { margin-top: 1rem; }
+.prose ul, .prose ol { padding-left: 1.3rem; }
+.prose li + li { margin-top: 0.35rem; }
+.prose h2 { font-size: 1.5rem; margin-top: 2.2rem; }
+.prose h3 { font-size: 1.2rem; margin-top: 1.8rem; }
+.prose em { font-family: var(--display); font-style: italic; }
+.prose blockquote {
+  padding-left: 1rem;
+  border-left: 2px solid var(--plum-faint);
+  color: var(--ink-soft);
+}
+.about-photo {
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+  margin-bottom: 1.5rem;
+}
+.post-outro {
+  margin-top: 2.5rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--hairline);
+  font-size: 0.98rem;
+  color: var(--ink-soft);
+}
+
+.writing-list { list-style: none; max-width: var(--measure); }
+.writing-list li + li { margin-top: 2.4rem; }
+.writing-list h2 { font-size: 1.5rem; margin-top: 0.3rem; }
+.writing-list h2 a { color: var(--ink); text-decoration: none; }
+.writing-list h2 a:hover { color: var(--plum); text-decoration: underline; }
+.writing-list li > p:last-child { margin-top: 0.4rem; color: var(--ink-soft); }
+
+/* ── Footer ─────────────────────────────────────────────────────────── */
+
+.site-footer {
+  max-width: calc(var(--measure) + var(--rail));
+  margin: 0 auto;
+  padding: 2.5rem 1.25rem 3rem;
+}
+.site-footer > p { padding-left: var(--rail); }
+.site-footer p {
+  font-family: var(--sans);
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+}
+.site-footer .colophon {
+  margin-top: 0.5rem;
+  font-family: var(--display);
+  font-style: italic;
+  font-size: 0.95rem;
+}
+
+/* ── Small screens ──────────────────────────────────────────────────── */
+
+@media (max-width: 40rem) {
+  :root { --rail: 2rem; --rail-x: 0.55rem; }
+  body { font-size: 1rem; }
+  .hero { padding-top: 3rem; }
+  .site-header ul { gap: 1rem; }
+  .chapter + .chapter { margin-top: 2.75rem; }
+}

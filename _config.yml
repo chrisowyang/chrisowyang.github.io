@@ -1,18 +1,45 @@
-# Site Build Settings
+# Site settings
+title: Chris Owyang
+description: >-
+  Product leader. Currently shipping subscriptions at Uber.
+  Previously taught machines to recommend music.
+url: "https://owyang.xyz"
+author:
+  name: Chris Owyang
+  email: owyangwms@gmail.com
 
-# jekyll-paginate configuration
-paginate:            5
+# Contact
+email: owyangwms@gmail.com
+# TODO(chris): confirm LinkedIn URL, then uncomment and it will appear in the Contact section.
+# linkedin: "https://www.linkedin.com/in/TODO"
 
 # Build settings
-markdown:            kramdown
-highlighter:         rouge
-permalink:           /:title
-plugins:             [jekyll-paginate, jekyll-sitemap, jekyll-feed, jekyll-seo-tag]
+markdown: kramdown
+highlighter: rouge
+permalink: /:title
+plugins: [jekyll-sitemap, jekyll-feed, jekyll-seo-tag]
 
-# Customise atom feed settings (this is where Jekyll-Feed gets configuration information)
-title:		           "Chris Owyang"
-description:	       "a product guy"
+collections:
+  writing:
+    output: true
+    permalink: /writing/:slug
 
-# RSS 2.0 can be used instead of Atom by uncommenting following two lines
-#feed:
-#  path: rss-feed.xml
+defaults:
+  - scope:
+      path: ""
+    values:
+      image: /assets/img/og-card.png
+  - scope:
+      path: ""
+      type: writing
+    values:
+      layout: post
+
+feed:
+  collections: [writing]
+
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - vendor

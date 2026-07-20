@@ -1,4 +1,70 @@
 ---
-layout: home
-title: Home
+layout: default
+title: Chris Owyang
 ---
+<section class="hero">
+  <h1>Chris Owyang</h1>
+  <!-- DRAFT hero sentence (working draft from the PRD — Chris to approve) -->
+  <p class="hero-line">
+    Product leader. Currently shipping subscriptions at Uber.
+    Previously taught machines to recommend music.
+  </p>
+  <nav class="start-here" aria-label="Start where you like">
+    <p>Start where you like —</p>
+    <ul>
+      <li><a href="#story">if you're curious about my work</a></li>
+      <li><a href="/writing/">if you want to see how I think</a></li>
+      <li><a href="#contact">if you just want to say hi</a></li>
+    </ul>
+  </nav>
+</section>
+
+<section id="story" class="story" aria-labelledby="story-heading">
+  <header class="story-header">
+    <h2 id="story-heading">One idea, five chapters</h2>
+    <p class="story-intro">
+      My career only looks like a list of jobs. It's actually one idea
+      developing over time: using AI and careful product design to make
+      things personal.
+    </p>
+  </header>
+
+  <div class="chapters" data-throughline>
+    <ol class="chapter-list">
+      {% for chapter in site.data.chapters %}
+      <li class="chapter" id="{{ chapter.id }}">
+        <span class="chapter-marker" aria-hidden="true"></span>
+        <p class="meta">{{ chapter.era }} · {{ chapter.place }}</p>
+        <h3>{{ chapter.title }}</h3>
+        <p class="chapter-short">{{ chapter.short | markdownify | remove: '<p>' | remove: '</p>' }}</p>
+        <details class="chapter-deeper">
+          <summary>Go deeper</summary>
+          <div class="deeper-body prose">
+            {{ chapter.deeper | markdownify }}
+          </div>
+        </details>
+      </li>
+      {% endfor %}
+    </ol>
+  </div>
+</section>
+
+<section id="now" class="now" aria-labelledby="now-heading">
+  <h2 id="now-heading">Now</h2>
+  <p class="meta">What I'm currently thinking about · updated {{ site.data.now.updated }}</p>
+  <ul>
+    {% for item in site.data.now.items %}
+    <li>{{ item }}</li>
+    {% endfor %}
+  </ul>
+  <p class="now-more">Longer versions live in <a href="/writing/">Writing</a>.</p>
+</section>
+
+<section id="contact" class="contact" aria-labelledby="contact-heading">
+  <h2 id="contact-heading">Say hi</h2>
+  <p>
+    The best emails I get start with a specific question. Send me one at
+    <a href="mailto:{{ site.email }}">{{ site.email }}</a>{% if site.linkedin %},
+    or find me on <a href="{{ site.linkedin }}">LinkedIn</a>{% endif %}.
+  </p>
+</section>

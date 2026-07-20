@@ -1,12 +1,10 @@
 ---
 layout: default
 ---
-
-<div class="page-content">
-  <h1>
-    {{ page.title }}
-  </h1>
-  <article>
-    {{ content }}
-  </article>
-</div>
+<article class="page prose">
+  <header class="page-header">
+    <h1>{{ page.title }}</h1>
+    {% if page.dek %}<p class="dek">{{ page.dek }}</p>{% endif %}
+  </header>
+  {{ content }}
+</article>

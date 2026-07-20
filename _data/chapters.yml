@@ -1,0 +1,113 @@
+# The chaptered story — the homepage centerpiece.
+# Each entry is one chapter on the through-line. Edit freely; the layout
+# never needs to change. "short" is the coffee version (2–3 sentences,
+# first person). "deeper" is the expandable layer and supports markdown.
+#
+# ── ALL COPY BELOW IS DRAFT ─────────────────────────────────────────────
+# Written by Claude from the PRD and the old About page. Chris: rewrite in
+# your own voice, then delete this banner.
+# ────────────────────────────────────────────────────────────────────────
+
+- id: oliver-wyman
+  era: "The starting point"
+  place: "Oliver Wyman"
+  title: "Learning to structure hard problems"
+  short: >-
+    I started in consulting, which is a strange way to say I spent a few
+    years learning how to take a problem that feels like fog and give it
+    edges. That habit — structure first, opinions second — turned out to be
+    the most durable thing I own.
+  deeper: |
+    Consulting gets a bad rap in product circles, and some of it is earned.
+    But it taught me two things I still use weekly: how to decompose an
+    ambiguous question into something a team can actually work on, and how
+    to communicate with people who have ten minutes and real money at
+    stake.
+
+    It also taught me what I didn't want: to be the person recommending the
+    thing rather than the person building it.
+
+- id: spotify
+  era: "First contact with AI at scale"
+  place: "Spotify"
+  title: "Teaching machines to recommend music"
+  short: >-
+    At Spotify I helped incubate Discovery Mode, an AI-powered
+    recommendation product. It was my first time watching machine learning
+    change what millions of people heard, and it rewired how I think about
+    product.
+  deeper: |
+    Discovery Mode let artists signal which tracks mattered to them, and
+    let our recommendation systems act on it — a marketplace built directly
+    on top of machine learning. I led data science and product work through
+    its incubation, which meant living in the gap between "the model can do
+    this" and "a person will feel good about this."
+
+    Along the way I worked closely with the teams behind Spotify's in-house
+    data science platform and [Backstage](https://backstage.io/), the
+    developer platform Spotify later open-sourced. The lesson that stuck:
+    personalization is a product decision wearing a math costume. The model
+    is rarely the hard part; deciding what it should optimize for is.
+
+- id: seek
+  era: "Going early-stage"
+  place: "Seek AI"
+  title: "Head of Product at an LLM-native startup"
+  short: >-
+    After Stanford GSB I jumped from the biggest company I'd worked at to
+    nearly the smallest: interim Head of Product at Seek AI, an LLM-powered
+    data analytics startup. I built the product org and shipped the core of
+    the product, and stayed through the acquisition by IBM.
+  deeper: |
+    Seek translated natural language into real answers from enterprise
+    data — an LLM-native product before that was a category. I built out
+    the product organization and launched the pieces that defined it: the
+    [collaborative agent](https://www.seek.ai/blog/introducing-powered-by-seek-an-embedded-ai-data-analyst-for-your-customers),
+    the [core natural-language-to-SQL model](https://www.seek.ai/blog/announcing-seeker-1-natural-language-to-sql-model),
+    and the [Slack integration](https://www.seek.ai/blog/updated-slack-integration-for-seek-ai)
+    that put an AI analyst where people already worked.
+
+    Working that close to the metal of LLMs — evals, latency budgets, trust
+    when the model is wrong — is a different sport from working near them.
+    IBM acquired the company, which was a satisfying way to learn that the
+    sport is real.
+
+- id: uber
+  era: "Now"
+  place: "Uber"
+  title: "Subscriptions that fit how people actually live"
+  short: >-
+    Today I lead a subscriptions portfolio at Uber with a team of three
+    PMs. Subscriptions sound like a pricing problem, but they're really a
+    relationship problem: the product has to keep earning its place in
+    someone's life, every month.
+  deeper: |
+    I keep the details high level here, but the shape of the work: a
+    portfolio of membership and subscription experiences, a team of three
+    product managers, and a lot of thinking about what makes a recurring
+    product feel like a good deal rather than a subscription you forgot to
+    cancel.
+
+    It's the same thread as Spotify and Seek, one level up: using data and
+    increasingly AI to make a mass-market product feel like it was set up
+    for you specifically.
+
+- id: whats-next
+  era: "An open question"
+  place: "What's next"
+  title: "Multiplayer personal software"
+  short: >-
+    The thing I can't stop thinking about: software has gotten very good at
+    knowing *you*, and stays remarkably bad at knowing *your people* — your
+    household, your group chat, the small teams life actually runs on. I'm
+    exploring what AI-native, genuinely multiplayer personal software looks
+    like.
+  deeper: |
+    Every system I've worked on personalizes for an individual. But almost
+    nothing important in life is single-player: money, food, plans, kids,
+    trips. The tools groups use today are either enterprise software in
+    disguise or a shared note losing its mind.
+
+    I'm writing my way through this in public, slowly. If it's a thread you
+    pull on too, [read the working notes](/writing/multiplayer-personal-software)
+    — or better, email me. This is genuine curiosity, not a stealth pitch.
