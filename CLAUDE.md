@@ -14,7 +14,7 @@ This repo is public, so:
 
 - `content/fam.json` is the plaintext working copy. It is gitignored and must never be committed. `fam:check` fails if it is tracked.
 - `content/fam.json.enc` is the committed, encrypted copy of the same data.
-- Never put the password in a file, commit message, or PR. It comes from the `FAM_PAGE_PASSWORD` environment variable. If that variable is missing, ask the user for it and pass it inline (`FAM_PAGE_PASSWORD=... npm run fam:build`). Don't guess it.
+- Never put the password in a file, commit message, or PR. It comes from the `FAM_PAGE_PASSWORD` environment variable. If that variable is missing, stop and ask the user to set it (in a cloud session, as an environment variable in the environment's settings) rather than having them paste it into chat. Don't guess it.
 - The password is short, so the encryption keeps out casual visitors, not a determined attacker. Don't add confirmation numbers, phone numbers, or anything else that would matter if it leaked.
 - The password is case-insensitive and ignores surrounding spaces (both sides lowercase and trim it).
 
