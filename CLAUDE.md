@@ -25,11 +25,19 @@ This repo is public, so:
 | `content/fam.json` | Plaintext data, gitignored. Created by `fam:unlock`. |
 | `content/fam.json.enc` | Encrypted data. Committed. |
 | `fam.html` | Built page, served at `/fam`. Committed. Never edit by hand. |
-| `assets/fam/` | Leaflet and the Instrument Sans font, copied in by the build. Committed. |
+| `assets/fam/` | Leaflet, MapLibre GL and its Leaflet bridge, and the Instrument Sans font, copied in by the build. Committed. |
 | `src/fam/` | Page source: `index.html` template, `fam.css`, and the JS modules. |
 | `scripts/fam/` | Build and data tooling. `lib/schema.mjs` holds the schema and copy rules. |
 
 `_config.yml` excludes the tooling from Jekyll and keeps `fam.html` out of the sitemap.
+
+### Map
+
+The basemap is OpenFreeMap's Positron style (light gray vector tiles, no API key, no sign-up), drawn by MapLibre GL inside Leaflet via `@maplibre/maplibre-gl-leaflet`. Markers, popups, and fitting stay plain Leaflet. If a phone has no WebGL2, or OpenFreeMap fails or takes over 12 seconds, `src/fam/map.js` falls back to OpenStreetMap raster tiles shown in grayscale (also keyless).
+
+- Don't switch back to CARTO basemaps: since late August 2026 they need an API key and keyless tiles show an "API KEY REQUIRED" watermark.
+- `maplibre-gl` is pinned to v5. v6 dropped the single-file build the Leaflet bridge loads.
+- Keep the default Referrer-Policy. OpenStreetMap's tile servers refuse requests without a Referer.
 
 ### Commands
 

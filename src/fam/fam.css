@@ -584,6 +584,10 @@ a {
 .map.leaflet-container a {
   color: var(--ink);
 }
+/* Fallback basemap (OpenStreetMap raster), toned down to match Positron. */
+.map--raster .leaflet-tile-pane {
+  filter: grayscale(1) contrast(0.8) brightness(1.12);
+}
 .map.leaflet-container a.pill:active {
   color: var(--paper);
 }

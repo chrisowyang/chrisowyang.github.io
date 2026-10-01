@@ -91,11 +91,19 @@ async function bundle() {
 
 function copyAssets() {
   const leaflet = path.dirname(require.resolve('leaflet/dist/leaflet.js'));
+  const maplibre = path.dirname(require.resolve('maplibre-gl/package.json'));
+  const bridge = path.dirname(require.resolve('@maplibre/maplibre-gl-leaflet/package.json'));
   const font = path.dirname(require.resolve('@fontsource-variable/instrument-sans/package.json'));
   const copies = [
     [path.join(leaflet, 'leaflet.js'), 'leaflet.js'],
     [path.join(leaflet, 'leaflet.css'), 'leaflet.css'],
     [path.join(leaflet, '../LICENSE'), 'LEAFLET-LICENSE.txt'],
+    // MapLibre 5 is the last version with a single-file build the Leaflet bridge can use.
+    [path.join(maplibre, 'dist/maplibre-gl.js'), 'maplibre-gl.js'],
+    [path.join(maplibre, 'dist/maplibre-gl.css'), 'maplibre-gl.css'],
+    [path.join(maplibre, 'LICENSE.txt'), 'MAPLIBRE-LICENSE.txt'],
+    [path.join(bridge, 'leaflet-maplibre-gl.js'), 'leaflet-maplibre-gl.js'],
+    [path.join(bridge, 'LICENSE'), 'MAPLIBRE-LEAFLET-LICENSE.txt'],
     [path.join(font, 'files/instrument-sans-latin-wght-normal.woff2'), 'fonts/instrument-sans-latin-wght-normal.woff2'],
     [path.join(font, 'LICENSE'), 'fonts/OFL.txt'],
   ];

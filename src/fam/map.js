@@ -1,36 +1,99 @@
-// Shared map for Shop and Art. Leaflet is loaded only the first time a map is
-// needed. Pins come from lat/lng in the data, never from runtime geocoding.
+// Shared map for Shop and Art. The map libraries load only the first time a map
+// is needed. Pins come from lat/lng in the data, never from runtime geocoding.
+//
+// Basemap: OpenFreeMap's Positron style (light gray vector tiles, no API key,
+// no sign-up), drawn by MapLibre GL inside Leaflet. If the phone has no WebGL2
+// or OpenFreeMap doesn't answer, it falls back to OpenStreetMap's raster tiles
+// shown in grayscale (also keyless).
 import { h, reducedMotion } from './dom.js';
 import { directionsUrl, hasCoords } from './format.js';
 
 const ASSETS = '/assets/fam/';
-const TILES = 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png';
-const ATTRIBUTION =
-  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
+const STYLE = 'https://tiles.openfreemap.org/styles/positron';
+const STYLE_ATTRIBUTION =
+  '<a href="https://openfreemap.org">OpenFreeMap</a> &copy; <a href="https://www.openmaptiles.org/">OpenMapTiles</a> Data from <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>';
+const RASTER = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
+const RASTER_ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+const STYLE_TIMEOUT_MS = 12000;
 const DEFAULT_VIEW = { center: [40.7231, -73.9969], zoom: 13 };
 
-let leaflet = null;
-export function loadLeaflet() {
-  if (window.L) return Promise.resolve(window.L);
-  if (!leaflet) {
-    leaflet = new Promise((resolve, reject) => {
-      document.head.append(h('link', { rel: 'stylesheet', href: `${ASSETS}leaflet.css` }));
-      const script = h('script', { src: `${ASSETS}leaflet.js` });
-      script.onload = () => resolve(window.L);
-      script.onerror = () => {
-        leaflet = null;
-        reject(new Error('Leaflet failed to load'));
-      };
-      document.head.append(script);
-    });
+const loadCss = (href) => document.head.append(h('link', { rel: 'stylesheet', href }));
+const loadScript = (src) =>
+  new Promise((resolve, reject) => {
+    const script = h('script', { src });
+    script.onload = resolve;
+    script.onerror = () => reject(new Error(`${src} failed to load`));
+    document.head.append(script);
+  });
+
+function hasWebGL2() {
+  try {
+    return !!document.createElement('canvas').getContext('webgl2');
+  } catch {
+    return false;
   }
-  return leaflet;
+}
+
+// Resolves to { L, vector } where vector says whether MapLibre is available.
+let libs = null;
+export function loadMapLibs() {
+  if (!libs) {
+    libs = (async () => {
+      const vector = hasWebGL2();
+      loadCss(`${ASSETS}leaflet.css`);
+      if (vector) loadCss(`${ASSETS}maplibre-gl.css`);
+      const [, gl] = await Promise.all([
+        loadScript(`${ASSETS}leaflet.js`),
+        vector ? loadScript(`${ASSETS}maplibre-gl.js`).then(() => true, () => false) : false,
+      ]);
+      const bridged = gl && (await loadScript(`${ASSETS}leaflet-maplibre-gl.js`).then(() => true, () => false));
+      return { L: window.L, vector: !!(bridged && window.L.maplibreGL) };
+    })();
+    libs.catch(() => (libs = null));
+  }
+  return libs;
+}
+
+function addBasemap(L, map, el, vector) {
+  const raster = () => {
+    el.classList.add('map--raster');
+    L.tileLayer(RASTER, { maxZoom: 19, attribution: RASTER_ATTRIBUTION }).addTo(map);
+  };
+  if (!vector) return raster();
+
+  let layer;
+  try {
+    layer = L.maplibreGL({ style: STYLE, attributionControl: { customAttribution: STYLE_ATTRIBUTION } }).addTo(map);
+  } catch {
+    return raster();
+  }
+  const gl = layer.getMaplibreMap();
+  let settled = false;
+  const fallBack = () => {
+    if (settled) return;
+    settled = true;
+    map.removeLayer(layer);
+    raster();
+  };
+  const timer = setTimeout(fallBack, STYLE_TIMEOUT_MS);
+  // Once OpenFreeMap's style has arrived the service is up; errors after that
+  // (a single missing tile) are not worth abandoning the vector map for.
+  gl.once('style.load', () => {
+    settled = true;
+    clearTimeout(timer);
+  });
+  gl.on('error', () => {
+    if (!settled) {
+      clearTimeout(timer);
+      fallBack();
+    }
+  });
 }
 
 // places: [{ id, name, address, placeId, lat, lng, pin, sub }]
 // onSelect(id) runs when someone taps a pin.
 export async function createMap(el, { label, places, onSelect, wheelZoom = false }) {
-  const L = await loadLeaflet();
+  const { L, vector } = await loadMapLibs();
   const still = reducedMotion();
   el.setAttribute('aria-label', label);
   const map = L.map(el, {
@@ -42,7 +105,7 @@ export async function createMap(el, { label, places, onSelect, wheelZoom = false
     markerZoomAnimation: !still,
   });
   map.attributionControl.setPrefix('<a href="https://leafletjs.com">Leaflet</a>');
-  L.tileLayer(TILES, { subdomains: 'abcd', maxZoom: 20, attribution: ATTRIBUTION }).addTo(map);
+  addBasemap(L, map, el, vector);
 
   const markers = new Map();
   for (const p of places.filter(hasCoords)) {
