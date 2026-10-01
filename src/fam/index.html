@@ -1,0 +1,37 @@
+<!doctype html>
+<!-- Built by scripts/fam/build.mjs from src/fam. Do not edit fam.html by hand. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="format-detection" content="telephone=no">
+<meta name="color-scheme" content="light only">
+<meta name="theme-color" content="#ffffff">
+<title>/fam</title>
+<link rel="preload" href="/assets/fam/fonts/instrument-sans-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<script>
+(function () {
+  var l = location;
+  if (l.protocol === 'http:' && !/^(localhost|127\.|\[::1\])/.test(l.hostname)) { l.replace('https:' + l.href.slice(5)); return; }
+  try { if (localStorage.getItem('fam:key')) document.documentElement.classList.add('has-key'); } catch (e) {}
+})();
+</script>
+<style>/*FAM_CSS*/</style>
+</head>
+<body>
+<main id="gate" class="gate">
+  <p class="gate__mark display-xl">/fam</p>
+  <form id="gate-form" class="gate__form" novalidate>
+    <label class="gate__label" for="gate-password">Password</label>
+    <input id="gate-password" class="gate__input" name="password" type="password" autocomplete="current-password" autocapitalize="none" autocorrect="off" spellcheck="false">
+    <button class="pill pill--fill gate__submit" type="submit">Open</button>
+    <p id="gate-error" class="gate__error" role="alert"></p>
+  </form>
+  <noscript><p class="noscript">This page needs JavaScript.</p></noscript>
+</main>
+<div id="app"></div>
+<script id="fam-payload" type="application/json">/*FAM_PAYLOAD*/</script>
+<script>/*FAM_JS*/</script>
+</body>
+</html>

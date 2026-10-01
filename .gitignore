@@ -1,3 +1,8 @@
 _site
 .sass-cache
 .jekyll-metadata
+node_modules
+# /fam trip data: only the encrypted copy (content/fam.json.enc) is committed.
+content/fam.json
+content/.fam-unlocked-from
+fam.test.html

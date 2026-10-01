@@ -16,3 +16,30 @@ description:	       "a product guy"
 # RSS 2.0 can be used instead of Atom by uncommenting following two lines
 #feed:
 #  path: rss-feed.xml
+
+# Keep the /fam build tooling out of the published site. (Gemfile, node_modules
+# and vendor are Jekyll's defaults, listed again because this list replaces them
+# on some Jekyll versions.)
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+  - package.json
+  - package-lock.json
+  - content
+  - scripts
+  - src
+  - design-refs
+  - CLAUDE.md
+  - fam.test.html
+
+# /fam is private: never list it in the sitemap.
+defaults:
+  - scope:
+      path: "fam.html"
+    values:
+      sitemap: false

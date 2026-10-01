@@ -1,0 +1,22 @@
+{
+  "name": "owyang-xyz-fam",
+  "private": true,
+  "description": "Build tooling for the password-protected /fam page. The rest of the site is Jekyll.",
+  "type": "module",
+  "scripts": {
+    "fam:unlock": "node scripts/fam/unlock.mjs",
+    "fam:check": "node scripts/fam/check.mjs",
+    "fam:geocode": "node scripts/fam/geocode.mjs",
+    "fam:diff": "node scripts/fam/diff.mjs",
+    "fam:build": "node scripts/fam/build.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@fontsource-variable/instrument-sans": "^5.3.0",
+    "esbuild": "^0.28.2",
+    "leaflet": "^1.9.4",
+    "zod": "^3.25.76"
+  }
+}
